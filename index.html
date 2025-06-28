@@ -404,6 +404,68 @@
             font-size: 12px;
             opacity: 0.8;
         }
+
+        .examples {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .examples-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .examples h2 {
+            color: var(--text-primary);
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .example-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .example-card:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 14px;
+        }
+
+        .example-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -432,6 +494,26 @@
 
         <button type="submit" id="decode-button" disabled><span class="loading"></span>Loading...</button>
     </form>
+
+    <section class="examples">
+        <div class="examples-header">
+            <h2>Examples</h2>
+        </div>
+        <div class="examples-grid">
+            <div class="example-card" tabindex="0" role="button" data-example="access-token" aria-label="Load access token example">
+                <div class="example-title">Access Token</div>
+                <div class="example-description">Standard OAuth 2.0 access token with user permissions and scopes</div>
+            </div>
+            <div class="example-card" tabindex="0" role="button" data-example="id-token" aria-label="Load ID token example">
+                <div class="example-title">ID Token</div>
+                <div class="example-description">OpenID Connect ID token with user identity information</div>
+            </div>
+            <div class="example-card" tabindex="0" role="button" data-example="refresh-token" aria-label="Load refresh token example">
+                <div class="example-title">Refresh Token</div>
+                <div class="example-description">Long-lived token used to obtain new access tokens</div>
+            </div>
+        </div>
+    </section>
 
     <section id="outputSection" class="output hidden" role="region" aria-live="polite"
              aria-label="Decoded token output">
@@ -462,6 +544,25 @@
 <script>
     // Loading state management
     let isLibraryLoaded = false;
+
+    // JWT Examples
+    const jwtExamples = {
+        'access-token': {
+            token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1Njc4OTAifQ.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYxMjM0NTY3ODkwIiwiYXVkIjpbImh0dHBzOi8vYXBpLmV4YW1wbGUuY29tLyIsImh0dHBzOi8vZXhhbXBsZS5hdXRoMC5jb20vdXNlcmluZm8iXSwiZXhwIjoxNzQwNDI3MjAwLCJpYXQiOjE3NDA0MjQ0MDAsImF6cCI6IjEyMzQ1Njc4OTBhYmNkZWYiLCJzY29wZSI6InJlYWQ6cHJvZmlsZSB3cml0ZTpwcm9maWxlIHJlYWQ6cG9zdHMiLCJwZXJtaXNzaW9ucyI6WyJyZWFkOnVzZXJzIiwid3JpdGU6dXNlcnMiXX0.example_signature',
+            title: 'Access Token',
+            description: 'Standard OAuth 2.0 access token with user permissions and scopes'
+        },
+        'id-token': {
+            token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1Njc4OTAifQ.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYxMjM0NTY3ODkwIiwiYXVkIjoiMTIzNDU2Nzg5MGFiY2RlZiIsImV4cCI6MTc0MDQyNzIwMCwiaWF0IjoxNzQwNDI0NDAwLCJhdF9oYXNoIjoiZXhhbXBsZV9oYXNoIiwibm9uY2UiOiJhYmMxMjMiLCJuYW1lIjoiSm9obiBEb2UiLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiRG9lIiwibmlja25hbWUiOiJqb2huZG9lIiwicGljdHVyZSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYXZhdGFyLmpwZyIsImVtYWlsIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwidXBkYXRlZF9hdCI6IjIwMjQtMTItMjVUMTI6MDA6MDBaIn0.example_signature',
+            title: 'ID Token',
+            description: 'OpenID Connect ID token with user identity information'
+        },
+        'refresh-token': {
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1Njc4OTAifQ.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYxMjM0NTY3ODkwIiwiYXVkIjoiMTIzNDU2Nzg5MGFiY2RlZiIsImV4cCI6MTc3MTk2MzIwMCwiaWF0IjoxNzQwNDI0NDAwLCJqdGkiOiJhYmMxMjMtZGVmNDU2LWdoaTc4OSIsInR5cCI6InJlZnJlc2giLCJhenAiOiIxMjM0NTY3ODkwYWJjZGVmIiwic2NvcGUiOiJvZmZsaW5lX2FjY2VzcyJ9.example_signature',
+            title: 'Refresh Token',
+            description: 'Long-lived token used to obtain new access tokens'
+        }
+    };
 
     // Check library loading status
     const checkLibraryStatus = setInterval(() => {
@@ -575,6 +676,18 @@
 
         copyButton.addEventListener('click', copyToClipboard);
         themeToggle.addEventListener('click', toggleTheme);
+
+        // Add example card event listeners
+        const exampleCards = document.querySelectorAll('.example-card');
+        exampleCards.forEach(card => {
+            card.addEventListener('click', () => loadExample(card.dataset.example));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    loadExample(card.dataset.example);
+                }
+            });
+        });
 
         // Enhanced keyboard support
         jwtInput.addEventListener('keydown', (e) => {
@@ -694,6 +807,24 @@
             // Fallback: Show user a message to copy manually
             showError('Clipboard access unavailable. Please select and copy the text manually.');
         }
+    }
+
+    function loadExample(exampleType) {
+        const example = jwtExamples[exampleType];
+        if (!example) {
+            showError('Example not found');
+            return;
+        }
+
+        const jwtInput = document.getElementById('jwtInput');
+        jwtInput.value = example.token;
+        jwtInput.focus();
+        
+        // Automatically decode the example
+        decodeJWT();
+        
+        // Announce to screen readers
+        announceToScreenReader(`Loaded ${example.title} example`);
     }
 </script>
 </body>
