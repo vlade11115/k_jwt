@@ -467,30 +467,8 @@
                 copyButton.textContent = 'Copy JSON';
             }, 2000);
         } catch (err) {
-            // Fallback for older browsers
-            const textArea = document.createElement('textarea');
-            textArea.value = output;
-            textArea.style.position = 'fixed';
-            textArea.style.left = '-999999px';
-            textArea.setAttribute('aria-hidden', 'true');
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                document.execCommand('copy');
-                successMessage.style.display = 'block';
-                copyButton.textContent = 'Copied!';
-
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                    copyButton.textContent = 'Copy JSON';
-                }, 2000);
-            } catch (err) {
-                showError('Failed to copy to clipboard');
-            } finally {
-                document.body.removeChild(textArea);
-            }
+            // Fallback: Show user a message to copy manually
+            showError('Clipboard access unavailable. Please select and copy the text manually.');
         }
     }
 </script>
