@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Decode JSON Web Tokens (JWT) securely in your browser without sending data to any server">
+    <meta name="description"
+          content="Decode JSON Web Tokens (JWT) securely in your browser without sending data to any server">
     <meta name="theme-color" content="#4CAF50">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self';">
     <title>JWT Decoder - Decode JSON Web Tokens Online</title>
     <!-- Prism.js for syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
-    
+
     <script type="module">
         import * as jose from 'https://unpkg.com/jose@6.0.11/dist/webapi/index.js';
+
         window.jose = jose;
     </script>
     <style>
@@ -52,32 +55,32 @@
             background-color: var(--bg-primary);
             line-height: 1.6;
         }
-        
+
         .container {
             background: var(--bg-secondary);
             border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
             box-shadow: var(--shadow);
         }
-        
+
         h1 {
             color: var(--text-primary);
             margin-bottom: var(--spacing-lg);
             text-align: center;
             font-size: clamp(1.5rem, 4vw, 2rem);
         }
-        
+
         .input-group {
             margin-bottom: var(--spacing-md);
         }
-        
+
         label {
             display: block;
             margin-bottom: var(--spacing-sm);
             color: var(--text-secondary);
             font-weight: 600;
         }
-        
+
         textarea {
             width: 100%;
             min-height: 120px;
@@ -89,13 +92,13 @@
             resize: vertical;
             transition: border-color 0.2s ease;
         }
-        
+
         textarea:focus {
             outline: 2px solid var(--primary-color);
             outline-offset: 2px;
             border-color: var(--primary-color);
         }
-        
+
         button {
             background-color: var(--primary-color);
             color: white;
@@ -117,7 +120,7 @@
         button:active {
             transform: translateY(1px);
         }
-        
+
         button:hover {
             background-color: var(--primary-hover);
         }
@@ -127,29 +130,29 @@
             cursor: not-allowed;
             transform: none;
         }
-        
+
         .output {
             margin-top: var(--spacing-lg);
         }
-        
+
         .output-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        
+
         .copy-button {
             background-color: var(--secondary-color);
             padding: 6px 12px;
             font-size: 14px;
             width: auto;
         }
-        
+
         .copy-button:hover {
             background-color: var(--secondary-hover);
         }
-        
+
         pre {
             background-color: #2d3748 !important;
             border: 1px solid #4a5568;
@@ -163,7 +166,7 @@
             line-height: 1.5;
             font-size: 14px;
         }
-        
+
         /* Custom JSON highlighting styles */
         pre code {
             background: none !important;
@@ -171,32 +174,32 @@
             font-size: inherit;
             color: #e2e8f0;
         }
-        
+
         /* Override Prism theme for better contrast */
         .token.string {
             color: #68d391 !important;
         }
-        
+
         .token.number {
             color: #f6ad55 !important;
         }
-        
+
         .token.boolean {
             color: #63b3ed !important;
         }
-        
+
         .token.null {
             color: #fc8181 !important;
         }
-        
+
         .token.property {
             color: #f093fb !important;
         }
-        
+
         .token.punctuation {
             color: #cbd5e0 !important;
         }
-        
+
         .error {
             background-color: var(--error-bg);
             border: 1px solid var(--error-color);
@@ -205,7 +208,7 @@
             border-radius: var(--radius);
             margin-top: var(--spacing-md);
         }
-        
+
         .success {
             background-color: var(--success-bg);
             border: 1px solid var(--success-color);
@@ -215,11 +218,11 @@
             margin-top: 10px;
             display: none;
         }
-        
+
         .hidden {
             display: none;
         }
-        
+
         .loading {
             display: inline-block;
             width: 20px;
@@ -231,9 +234,11 @@
             margin-right: 8px;
             vertical-align: middle;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .sr-only {
@@ -268,223 +273,226 @@
     </style>
 </head>
 <body>
-    <main class="container" role="main">
-        <h1>JWT Token Decoder</h1>
-        
-        <form id="jwt-form" novalidate>
-            <div class="input-group">
-                <label for="jwtInput">Enter JWT Token:</label>
-                <textarea 
-                    id="jwtInput" 
+<main class="container" role="main">
+    <h1>JWT Token Decoder</h1>
+
+    <form id="jwt-form" novalidate>
+        <div class="input-group">
+            <label for="jwtInput">Enter JWT Token:</label>
+            <textarea
+                    id="jwtInput"
                     placeholder="Paste your JWT token here..."
                     autocomplete="off"
                     spellcheck="false"
                     aria-label="JWT token input"
                     aria-describedby="jwt-help"
                     required
-                >eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30</textarea>
-                <span id="jwt-help" class="sr-only">Paste a JWT token to decode its header and payload</span>
-            </div>
-            
-            <button type="submit" id="decode-button" disabled><span class="loading"></span>Loading...</button>
-        </form>
-        
-        <section id="outputSection" class="output hidden" role="region" aria-live="polite" aria-label="Decoded token output">
-            <div class="output-header">
-                <h2 style="font-size: 1.2rem; margin: 0;">Decoded Token:</h2>
-                <button class="copy-button" id="copy-button" type="button" aria-label="Copy decoded token to clipboard">Copy JSON</button>
-            </div>
-            <pre id="output" tabindex="0" aria-label="Decoded token JSON"><code class="language-json"></code></pre>
-        </section>
-        
-        <div id="errorMessage" class="error hidden" role="alert" aria-live="assertive"></div>
-        <div id="successMessage" class="success" role="status" aria-live="polite">JSON copied to clipboard!</div>
-    </main>
+            >eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30</textarea>
+            <span id="jwt-help" class="sr-only">Paste a JWT token to decode its header and payload</span>
+        </div>
 
-    <script>
-        // Loading state management
-        let isLibraryLoaded = false;
-        
-        // Check library loading status
-        const checkLibraryStatus = setInterval(() => {
-            if (window.jose) {
-                isLibraryLoaded = true;
-                clearInterval(checkLibraryStatus);
-                enableDecoding();
-            }
-        }, 100);
-        
-        // Timeout after 10 seconds
-        setTimeout(() => {
-            if (!isLibraryLoaded) {
-                clearInterval(checkLibraryStatus);
-                showError('Unable to load JWT decoder library. Please check your internet connection and refresh the page.');
-                document.getElementById('decode-button').disabled = true;
-            }
-        }, 10000);
-        
-        function enableDecoding() {
-            const decodeButton = document.getElementById('decode-button');
-            if (decodeButton) {
-                decodeButton.disabled = false;
-                decodeButton.textContent = 'Decode Token';
-            }
+        <button type="submit" id="decode-button" disabled><span class="loading"></span>Loading...</button>
+    </form>
+
+    <section id="outputSection" class="output hidden" role="region" aria-live="polite"
+             aria-label="Decoded token output">
+        <div class="output-header">
+            <h2 style="font-size: 1.2rem; margin: 0;">Decoded Token:</h2>
+            <button class="copy-button" id="copy-button" type="button" aria-label="Copy decoded token to clipboard">Copy
+                JSON
+            </button>
+        </div>
+        <pre id="output" tabindex="0" aria-label="Decoded token JSON"><code class="language-json"></code></pre>
+    </section>
+
+    <div id="errorMessage" class="error hidden" role="alert" aria-live="assertive"></div>
+    <div id="successMessage" class="success" role="status" aria-live="polite">JSON copied to clipboard!</div>
+</main>
+
+<script>
+    // Loading state management
+    let isLibraryLoaded = false;
+
+    // Check library loading status
+    const checkLibraryStatus = setInterval(() => {
+        if (window.jose) {
+            isLibraryLoaded = true;
+            clearInterval(checkLibraryStatus);
+            enableDecoding();
         }
-        
-        // Add event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('jwt-form');
-            const copyButton = document.getElementById('copy-button');
-            const jwtInput = document.getElementById('jwtInput');
-            
-            form.addEventListener('submit', (e) => {
+    }, 100);
+
+    // Timeout after 10 seconds
+    setTimeout(() => {
+        if (!isLibraryLoaded) {
+            clearInterval(checkLibraryStatus);
+            showError('Unable to load JWT decoder library. Please check your internet connection and refresh the page.');
+            document.getElementById('decode-button').disabled = true;
+        }
+    }, 10000);
+
+    function enableDecoding() {
+        const decodeButton = document.getElementById('decode-button');
+        if (decodeButton) {
+            decodeButton.disabled = false;
+            decodeButton.textContent = 'Decode Token';
+        }
+    }
+
+    // Add event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('jwt-form');
+        const copyButton = document.getElementById('copy-button');
+        const jwtInput = document.getElementById('jwtInput');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            decodeJWT();
+        });
+
+        copyButton.addEventListener('click', copyToClipboard);
+
+        // Enhanced keyboard support
+        jwtInput.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 e.preventDefault();
                 decodeJWT();
-            });
-            
-            copyButton.addEventListener('click', copyToClipboard);
-            
-            // Enhanced keyboard support
-            jwtInput.addEventListener('keydown', (e) => {
-                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                    e.preventDefault();
-                    decodeJWT();
-                }
-            });
+            }
         });
-        
-        async function decodeJWT() {
-            const jwtInput = document.getElementById('jwtInput').value.trim();
-            const outputSection = document.getElementById('outputSection');
-            const output = document.getElementById('output');
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
-            const decodeButton = document.getElementById('decode-button');
-            
-            // Hide previous messages
-            errorMessage.classList.add('hidden');
-            errorMessage.textContent = '';
-            successMessage.style.display = 'none';
-            outputSection.classList.add('hidden');
-            
-            if (!jwtInput) {
-                showError('Please enter a JWT token');
-                document.getElementById('jwtInput').focus();
-                return;
+    });
+
+    async function decodeJWT() {
+        const jwtInput = document.getElementById('jwtInput').value.trim();
+        const outputSection = document.getElementById('outputSection');
+        const output = document.getElementById('output');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const decodeButton = document.getElementById('decode-button');
+
+        // Hide previous messages
+        errorMessage.classList.add('hidden');
+        errorMessage.textContent = '';
+        successMessage.style.display = 'none';
+        outputSection.classList.add('hidden');
+
+        if (!jwtInput) {
+            showError('Please enter a JWT token');
+            document.getElementById('jwtInput').focus();
+            return;
+        }
+
+        // Basic JWT format validation
+        const jwtRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/;
+        if (!jwtRegex.test(jwtInput)) {
+            showError('Invalid JWT format. A JWT should have three parts separated by dots.');
+            return;
+        }
+
+        // Check if library is loaded
+        if (!window.jose || !isLibraryLoaded) {
+            showError('JWT decoder library is still loading. Please wait...');
+            return;
+        }
+
+        // Disable button during decoding
+        decodeButton.disabled = true;
+        decodeButton.innerHTML = '<span class="loading"></span>Decoding...';
+
+        try {
+            // Decode the JWT without verification
+            const decoded = window.jose.decodeJwt(jwtInput);
+
+            // Get the header
+            const protectedHeader = window.jose.decodeProtectedHeader(jwtInput);
+
+            // Combine header and payload
+            const fullDecoded = {
+                header: protectedHeader,
+                payload: decoded
+            };
+
+            // Display the decoded token with syntax highlighting
+            const jsonString = JSON.stringify(fullDecoded, null, 2);
+            const codeElement = output.querySelector('code');
+            codeElement.textContent = jsonString;
+
+            // Apply syntax highlighting
+            if (window.Prism) {
+                Prism.highlightElement(codeElement);
             }
-            
-            // Basic JWT format validation
-            const jwtRegex = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$/;
-            if (!jwtRegex.test(jwtInput)) {
-                showError('Invalid JWT format. A JWT should have three parts separated by dots.');
-                return;
-            }
-            
-            // Check if library is loaded
-            if (!window.jose || !isLibraryLoaded) {
-                showError('JWT decoder library is still loading. Please wait...');
-                return;
-            }
-            
-            // Disable button during decoding
-            decodeButton.disabled = true;
-            decodeButton.innerHTML = '<span class="loading"></span>Decoding...';
-            
+
+            outputSection.classList.remove('hidden');
+
+            // Announce success to screen readers
+            announceToScreenReader('JWT token successfully decoded');
+
+        } catch (error) {
+            showError('Invalid JWT token: ' + error.message);
+        } finally {
+            // Re-enable button
+            decodeButton.disabled = false;
+            decodeButton.innerHTML = 'Decode Token';
+        }
+    }
+
+    function showError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        errorMessage.classList.remove('hidden');
+        errorMessage.focus();
+    }
+
+    function announceToScreenReader(message) {
+        const announcement = document.createElement('div');
+        announcement.className = 'sr-only';
+        announcement.setAttribute('role', 'status');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.textContent = message;
+        document.body.appendChild(announcement);
+        setTimeout(() => announcement.remove(), 1000);
+    }
+
+    async function copyToClipboard() {
+        const output = document.getElementById('output').querySelector('code').textContent;
+        const successMessage = document.getElementById('successMessage');
+        const copyButton = document.getElementById('copy-button');
+
+        try {
+            await navigator.clipboard.writeText(output);
+            successMessage.style.display = 'block';
+            copyButton.textContent = 'Copied!';
+
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                copyButton.textContent = 'Copy JSON';
+            }, 2000);
+        } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = output;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
             try {
-                // Decode the JWT without verification
-                const decoded = window.jose.decodeJwt(jwtInput);
-                
-                // Get the header
-                const protectedHeader = window.jose.decodeProtectedHeader(jwtInput);
-                
-                // Combine header and payload
-                const fullDecoded = {
-                    header: protectedHeader,
-                    payload: decoded
-                };
-                
-                // Display the decoded token with syntax highlighting
-                const jsonString = JSON.stringify(fullDecoded, null, 2);
-                const codeElement = output.querySelector('code');
-                codeElement.textContent = jsonString;
-                
-                // Apply syntax highlighting
-                if (window.Prism) {
-                    Prism.highlightElement(codeElement);
-                }
-                
-                outputSection.classList.remove('hidden');
-                
-                // Announce success to screen readers
-                announceToScreenReader('JWT token successfully decoded');
-                
-            } catch (error) {
-                showError('Invalid JWT token: ' + error.message);
-            } finally {
-                // Re-enable button
-                decodeButton.disabled = false;
-                decodeButton.innerHTML = 'Decode Token';
-            }
-        }
-        
-        function showError(message) {
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-            errorMessage.focus();
-        }
-        
-        function announceToScreenReader(message) {
-            const announcement = document.createElement('div');
-            announcement.className = 'sr-only';
-            announcement.setAttribute('role', 'status');
-            announcement.setAttribute('aria-live', 'polite');
-            announcement.textContent = message;
-            document.body.appendChild(announcement);
-            setTimeout(() => announcement.remove(), 1000);
-        }
-        
-        async function copyToClipboard() {
-            const output = document.getElementById('output').querySelector('code').textContent;
-            const successMessage = document.getElementById('successMessage');
-            const copyButton = document.getElementById('copy-button');
-            
-            try {
-                await navigator.clipboard.writeText(output);
+                document.execCommand('copy');
                 successMessage.style.display = 'block';
                 copyButton.textContent = 'Copied!';
-                
+
                 setTimeout(() => {
                     successMessage.style.display = 'none';
                     copyButton.textContent = 'Copy JSON';
                 }, 2000);
             } catch (err) {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = output;
-                textArea.style.position = 'fixed';
-                textArea.style.left = '-999999px';
-                textArea.setAttribute('aria-hidden', 'true');
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
-                try {
-                    document.execCommand('copy');
-                    successMessage.style.display = 'block';
-                    copyButton.textContent = 'Copied!';
-                    
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                        copyButton.textContent = 'Copy JSON';
-                    }, 2000);
-                } catch (err) {
-                    showError('Failed to copy to clipboard');
-                } finally {
-                    document.body.removeChild(textArea);
-                }
+                showError('Failed to copy to clipboard');
+            } finally {
+                document.body.removeChild(textArea);
             }
         }
-    </script>
+    }
+</script>
 </body>
 </html>
