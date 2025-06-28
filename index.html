@@ -376,6 +376,34 @@
                 padding: var(--spacing-md);
             }
         }
+
+        .footer {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin: 0 var(--spacing-sm);
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-license {
+            font-size: 12px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -418,6 +446,17 @@
 
     <div id="errorMessage" class="error hidden" role="alert" aria-live="assertive"></div>
     <div id="successMessage" class="success" role="status" aria-live="polite">JSON copied to clipboard!</div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <span>Built with:</span>
+            <a href="https://github.com/panva/jose" target="_blank" rel="noopener">jose</a>
+            <a href="https://github.com/PrismJS/prism" target="_blank" rel="noopener">Prism</a>
+        </div>
+        <div class="footer-license">
+            Licensed under <a href="https://github.com/vlade11115/k_jwt/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a> © 2025 Vladyslav Kartavets
+        </div>
+    </footer>
 </main>
 
 <script>
