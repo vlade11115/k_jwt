@@ -666,6 +666,20 @@
         // Initialize theme
         applyTheme(getCurrentTheme());
 
+        // Check for JWT token in query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = urlParams.get('t');
+        if (tokenFromUrl) {
+            jwtInput.value = tokenFromUrl;
+            // Auto-decode the token after library loads
+            const autoDecodeInterval = setInterval(() => {
+                if (isLibraryLoaded) {
+                    clearInterval(autoDecodeInterval);
+                    decodeJWT();
+                }
+            }, 100);
+        }
+
         // Listen for system theme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
             if (getCurrentTheme() === 'auto') {
@@ -766,6 +780,11 @@
 
             // Announce success to screen readers
             announceToScreenReader('JWT token successfully decoded');
+
+            // Update URL with the token for sharing
+            const url = new URL(window.location);
+            url.searchParams.set('t', jwtInput);
+            window.history.replaceState({}, '', url);
 
         } catch (error) {
             showError('Invalid JWT token: ' + error.message);

@@ -8,7 +8,7 @@ This is a JWT Token Decoder web application - a standalone, client-side HTML app
 
 ## Architecture
 
-The entire application is contained in a single `index.html` file that includes:
+The entire application is contained in a single `src/index.html` file that includes:
 - HTML structure for the UI
 - Inline CSS styling
 - JavaScript code that uses the jose library (v6.0.11) loaded from CDN
@@ -30,7 +30,7 @@ The entire application is contained in a single `index.html` file that includes:
 No build process required. To run the application:
 ```bash
 # Open directly in browser
-open index.html
+open src/index.html
 
 # Or use a simple HTTP server
 python3 -m http.server 8000
